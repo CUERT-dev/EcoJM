@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "dev_board")(type "KiCad")(uri "D:/CUERT/Jmeter/EcoJM/lib/EasyEDA.pretty/dev_board.pretty")(options "")(descr ""))
+)

@@ -1,4 +1,4 @@
 (sym_lib_table
   (version 7)
-  (lib (name "EasyEDA")(type "KiCad")(uri "D:/CUERT/Jmeter/EcoJM/lib/EasyEDA.kicad_sym")(options "")(descr ""))
+  (lib (name "EasyEDA")(type "KiCad")(uri "/home/renderer/shared_data/EcoJM/lib/EasyEDA.kicad_sym")(options "")(descr ""))
 )

@@ -4308,6 +4308,26 @@
 		)
 		(uuid "b05c2217-b02a-46f1-83d8-d58714536ce8")
 	)
+	(text_box "PSU"
+		(exclude_from_sim no)
+		(at 13.97 138.43 0)
+		(size 153.67 58.42)
+		(margins 0.9525 0.9525 0.9525 0.9525)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(fill
+			(type none)
+		)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "bd1b531f-65f3-4877-ace7-0cef15dc54b8")
+	)
 	(junction
 		(at 118.11 162.56)
 		(diameter 0)
@@ -4451,12 +4471,12 @@
 		(uuid "2f6f8dc3-9e0b-4bc3-bf35-a564644ea0e9")
 	)
 	(no_connect
-		(at 29.21 85.09)
-		(uuid "3cfa3677-8384-4b70-b50f-7229b82ebfc6")
+		(at 64.77 85.09)
+		(uuid "39af06a3-8a36-46a9-80d1-a9a3f0865e72")
 	)
 	(no_connect
-		(at 29.21 100.33)
-		(uuid "4321e1e5-f1da-4898-a0cb-b845453f2558")
+		(at 29.21 85.09)
+		(uuid "3cfa3677-8384-4b70-b50f-7229b82ebfc6")
 	)
 	(no_connect
 		(at 64.77 73.66)
@@ -4471,16 +4491,16 @@
 		(uuid "4eb8beb5-ef8a-4fd1-9c33-1c38ab01ecd5")
 	)
 	(no_connect
+		(at 64.77 81.28)
+		(uuid "6317552d-2ea3-436c-9293-ac39d82c6b29")
+	)
+	(no_connect
 		(at 29.21 62.23)
 		(uuid "67822f65-afba-4aea-9958-a61220d0f2ef")
 	)
 	(no_connect
 		(at 29.21 88.9)
 		(uuid "6e98eb4d-2d13-489b-a91a-85ca13d34628")
-	)
-	(no_connect
-		(at 29.21 104.14)
-		(uuid "6ee9c2d2-4f6c-4725-baf7-462261dc463a")
 	)
 	(no_connect
 		(at 64.77 88.9)
@@ -5280,16 +5300,6 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 85.09) (xy 66.04 85.09)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6c85c13b-0e5c-4d3a-a01f-0a79941c6d98")
-	)
-	(wire
-		(pts
 			(xy 214.63 100.33) (xy 214.63 102.87)
 		)
 		(stroke
@@ -5750,6 +5760,16 @@
 	)
 	(wire
 		(pts
+			(xy 27.94 104.14) (xy 29.21 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b742fb07-0755-48aa-b257-a5bdef8a5302")
+	)
+	(wire
+		(pts
 			(xy 60.96 46.99) (xy 66.04 46.99)
 		)
 		(stroke
@@ -6010,13 +6030,13 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 81.28) (xy 66.04 81.28)
+			(xy 27.94 100.33) (xy 29.21 100.33)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "f965b4c3-4328-47c9-86ee-473fbeff3651")
+		(uuid "fa2974f4-682f-4bad-bd0b-b8a7accef580")
 	)
 	(wire
 		(pts
@@ -6158,15 +6178,15 @@
 		)
 		(uuid "5367e184-b341-4ef7-9de7-35c99a6d33ee")
 	)
-	(label "SSR0"
-		(at 66.04 85.09 0)
+	(label "SSR1"
+		(at 27.94 100.33 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
-		(uuid "68f54ab7-0f63-4935-869e-78b28f912eed")
+		(uuid "61cff407-771c-4ffb-9bd7-dc828255d8c4")
 	)
 	(label "VDCH+_OUT"
 		(at 271.78 139.7 0)
@@ -6217,16 +6237,6 @@
 			(justify right bottom)
 		)
 		(uuid "96dd93e4-8368-4765-9058-91a6c6ec614c")
-	)
-	(label "SSR1"
-		(at 66.04 81.28 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ad606486-e0c1-49f3-8131-ef6c6f812a13")
 	)
 	(label "CAN_RXD"
 		(at 20.32 115.57 0)
@@ -6347,6 +6357,16 @@
 			(justify left bottom)
 		)
 		(uuid "f4e3e72b-8140-45a6-91c0-379630bc0a79")
+	)
+	(label "SSR0"
+		(at 27.94 104.14 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "fe359c23-19d9-403f-bfc2-2af7a2fa0950")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -7685,7 +7705,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_5x10mm"
 			(at 264.16 139.7 0)
 			(effects
 				(font
@@ -7733,7 +7753,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "4f33623f-7727-49be-862f-35d6e49bf158")
 		(property "Reference" "J2"
 			(at 239.395 130.81 0)
@@ -7744,14 +7763,14 @@
 			)
 		)
 		(property "Value" "Conn_01x01_Pin"
-			(at 239.395 133.35 0)
+			(at 239.268 137.414 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_5x10mm"
 			(at 240.03 135.89 0)
 			(effects
 				(font
@@ -11268,7 +11287,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_5x10mm"
 			(at 240.03 133.35 0)
 			(effects
 				(font
@@ -11900,14 +11919,14 @@
 			)
 		)
 		(property "Value" "Conn_01x01_Pin"
-			(at 264.795 139.7 0)
+			(at 264.16 144.272 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Wire:SolderWirePad_1x01_SMD_5x10mm"
 			(at 264.16 142.24 0)
 			(effects
 				(font

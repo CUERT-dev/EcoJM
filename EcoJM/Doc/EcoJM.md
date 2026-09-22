@@ -56,13 +56,13 @@ The functional block diagram illustrates the main hardware modules of the EcoJM 
 <img width="1078" height="636" alt="image" src="https://github.com/user-attachments/assets/aaa3919e-68aa-4c2b-8df8-05408c47b7e9" />
 
 ## 2.3 Main Functional Domains
-- **Processing and Control** — The STM32F_dev board serves as the system's microcontroller unit (MCU). It processes measurement signals, communicates with connected peripherals, and coordinates system-level operations.
-- **Electrical Measurement** — The system acquires voltage and current measurements through its sensing circuits. The measurement signals are provided to the MCU for processing and energy monitoring.
-- **CAN Communication** — The SIT65HVD230DR acts as a CAN transceiver, providing the physical interface between the MCU's CAN signals and the external CAN bus.
+- **Processing and Control**: The STM32F_dev board serves as the system's microcontroller unit (MCU). It processes measurement signals, communicates with connected peripherals, and coordinates system-level operations.
+- **Electrical Measurement**: The system acquires voltage and current measurements through its sensing circuits. The measurement signals are provided to the MCU for processing and energy monitoring.
+- **CAN Communication**: The SIT65HVD230DR acts as a CAN transceiver, providing the physical interface between the MCU's CAN signals and the external CAN bus.
 - **Switching** — K1 is an SPDT relay used for switching within the system's power circuit. Its exact switching function and control behavior should be verified from the schematic and system requirements.
-- **Data Storage** — The HX TF PUSH is a microSD card socket connected to the MCU through the implemented data interface. It provides an interface for external storage and data logging.
-- **Voltage Reference** — The TL431DBZ is used as a voltage reference in the measurement circuit. Its exact function and reference voltage should be verified from the schematic and component specifications.
-- **Auxiliary Power Supply** — The power supply section generates the required low-voltage supply rails. The MT2492 is used in the power conversion stage, while the AZ1117-3.3 generates the 3.3 V supply rail.
+- **Data Storage**: The HX TF PUSH is a microSD card socket connected to the MCU through the implemented data interface. It provides an interface for external storage and data logging.
+- **Voltage Reference**: The TL431DBZ is used as a voltage reference in the measurement circuit. Its exact function and reference voltage should be verified from the schematic and component specifications.
+- **Auxiliary Power Supply**: The power supply section generates the required low-voltage supply rails. The MT2492 is used in the power conversion stage, while the AZ1117-3.3 generates the 3.3 V supply rail.
 
 ## 2.4 Power and Signal Flow
 The EcoJM system includes power distribution, electrical measurement, processing, and communication paths.

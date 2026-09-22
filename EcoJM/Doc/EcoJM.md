@@ -39,3 +39,33 @@ The EcoJM hardware was developed to satisfy the following primary engineering ob
 * **Maintainability & Debug Access:** Provide accessible test points (`TP3`), standardized mounting features (`H1–H4`), and clean interface layouts to simplify probing, validation, and field servicing.
 
 These objectives are treated as primary engineering requirements and trade-offs. Where requirements conflict, system safety, noise immunity, electrical performance, and circuit protection take strict precedence.
+
+
+
+## 2. EcoJM System Architecture
+
+
+
+## 2.1 System Overview
+EcoJM is a Joule meter designed to measure the total energy consumed by an Electric Vehicle (EV). The system acquires electrical measurements, processes the measurement data through an STM32-based controller, and supports communication and data storage for energy monitoring and analysis.
+
+## 2.2 Functional Block Diagram
+
+The functional block diagram illustrates the main hardware modules of the EcoJM system, their interconnections, and the flow of power, measurement signals, and communication data.
+
+<img width="1078" height="636" alt="image" src="https://github.com/user-attachments/assets/aaa3919e-68aa-4c2b-8df8-05408c47b7e9" />
+
+## 2.3 Main Functional Domains
+- **Processing and Control** — The STM32F_dev board serves as the system's microcontroller unit (MCU). It processes measurement signals, communicates with connected peripherals, and coordinates system-level operations.
+- **Electrical Measurement** — The system acquires voltage and current measurements through its sensing circuits. The measurement signals are provided to the MCU for processing and energy monitoring.
+- **CAN Communication** — The SIT65HVD230DR acts as a CAN transceiver, providing the physical interface between the MCU's CAN signals and the external CAN bus.
+- **Switching** — K1 is an SPDT relay used for switching within the system's power circuit. Its exact switching function and control behavior should be verified from the schematic and system requirements.
+- **Data Storage** — The HX TF PUSH is a microSD card socket connected to the MCU through the implemented data interface. It provides an interface for external storage and data logging.
+- **Voltage Reference** — The TL431DBZ is used as a voltage reference in the measurement circuit. Its exact function and reference voltage should be verified from the schematic and component specifications.
+- **Auxiliary Power Supply** — The power supply section generates the required low-voltage supply rails. The MT2492 is used in the power conversion stage, while the AZ1117-3.3 generates the 3.3 V supply rail.
+
+## 2.4 Power and Signal Flow
+The EcoJM system includes power distribution, electrical measurement, processing, and communication paths.
+The auxiliary power supply generates the required voltage rails for the electronic circuits. The measurement circuitry acquires voltage and current signals, which are transferred to the MCU for processing. The MCU communicates with external devices through the CAN interface and may exchange data with the microSD storage interface.
+The detailed power and signal paths, including the relevant connectors, supply rails, and measurement signals, are documented in the system schematic.
+

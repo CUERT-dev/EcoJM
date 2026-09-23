@@ -105,16 +105,6 @@ The MCU is supplied from the 3.3 V regulated rail. The 5 V rail is used as an in
 The CAN communication module provides an interface between the microcontroller and the vehicle CAN network. It allows the system to transmit measured electrical parameters and receive relevant vehicle information through the CAN bus.
 
 ## 3.2.2 Architecture
-STM32F MCU 
-    │
-    │ CAN_TX / CAN_RX
-    ▼
-SIT65HVD230DR
-CAN Transceiver
-    │
-    │ CANH / CANL
-    ▼
-Vehicle CAN Bus
 
 The CAN communication path is divided into two interfaces. The MCU-side interface consists of the CAN transmit (CAN_TX) and CAN receive (CAN_RX) signals. These signals are connected to the SIT65HVD230DR CAN transceiver.
 The transceiver converts the logic-level CAN signals from the MCU into the differential CANH and CANL signals required by the physical CAN bus. The CANH and CANL lines are then connected to the external vehicle CAN network.
@@ -135,27 +125,10 @@ vehicle → CANH/CANL → transceiver → CAN_RX → MCU
 The main power switch controls the connection between the vehicle high-voltage power source and the external load. The switching function is implemented using a relay controlled by the microcontroller through an appropriate driver circuit, with secondary provisions for hardware-level manual override and transient voltage protection.
 
 ## 3.3.2 Architecture
-       EV HV Power
-            │
-            ▼
-       K1 Relay SPDT
-            │
-            ▼
-     Switched HV Output
-            │
-         External
-           Load
 
-        STM32F MCU
-             │
-             ▼
-        Relay Control
-             │
-             ▼
-          MOSFET
-             │
-             ▼
-          K1 Relay
+EV HV Power → K1 Relay SPDT → Switched HV Output - External Load
+
+STM32F MCU → Relay Control → MOSFET → K1 Relay
 
 When the MCU determines that the main power path should be enabled, it generates the relay-control signal. The MOSFET driver circuit energizes the relay coil, causing K1 to change state. The HV path is then connected to the switched output. When the control signal is removed, the relay returns to its default open state. A flyback diode is connected across the relay coil to suppress the voltage transient generated when the relay coil is de-energized, which protects the switching transistor from excessive voltage stress.
 
@@ -173,3 +146,75 @@ The ACS712 provides electrical isolation between the high-current conductor and 
 
 ## 3.4.3 ADC interface
 The 5V analog output of the ACS712 is stepped down through a resistor voltage divider (R6 and R7) to safely scale the signal below 3.3V, creating the Current_M signal that is sampled by the STM32 ADC.
+
+
+
+##### UNDER DEVELOPMENT #####
+
+## 4. Instrumentation and Measurement
+
+## 4.1 Instrumentation Objectives
+## 4.2 Required Equipment
+## 4.3 Test Points and Measurement Nodes
+## 4.4 Initial Power-Up Procedure
+## 4.5 Power Rail Measurements
+## 4.6 Current Measurement Testing
+## 4.7 Voltage Measurement Testing
+## 4.8 CAN Communication Testing
+## 4.9 MicroSD Interface Testing
+## 4.10 Main Switch Testing
+
+
+## 5. Calibration
+
+## 5.1 Calibration Objectives
+## 5.2 Calibration Requirements
+## 5.3 Current Sensor Calibration
+## 5.4 Voltage Measurement Calibration
+## 5.5 Calibration Procedure
+## 5.6 Calibration Data
+## 5.7 Calibration Error and Uncertainty
+## 5.8 Calibration Results
+
+
+## 6. PCB Implementation and Mechanical Integration
+
+## 6.1 PCB Overview
+## 6.2 Component Placement
+## 6.3 Routing and Layout Considerations
+## 6.4 Power and Signal Separation
+## 6.5 Connectors and Accessibility
+## 6.6 Mounting Holes and Mechanical Features
+## 6.7 3D Model Generation
+
+## 7. Validation and Bring-Up
+
+## 7.1 Initial Bring-Up
+## 7.2 Low-Voltage Testing
+## 7.3 Power Supply Validation
+## 7.4 MCU and Communication Validation
+## 7.5 ADC and Measurement Validation
+## 7.6 Main Switching Validation
+## 7.7 MicroSD Validation
+## 7.8 Integrated Hardware Testing
+
+
+## 8. Known Issues and Limitations
+
+## 8.1 Known Hardware Issues
+## 8.2 Measurement Limitations
+## 8.3 Calibration Limitations
+## 8.4 Documentation Gaps
+## 8.5 Mechanical and PCB Limitations
+
+
+## 9. Future Development
+
+## 9.1 Hardware Improvements
+## 9.2 Measurement Improvements
+## 9.3 Protection Improvements
+## 9.4 Communication and Data Logging Improvements
+## 9.5 Mechanical Improvements
+
+
+## 10. Revision History

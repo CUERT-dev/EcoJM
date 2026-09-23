@@ -149,7 +149,7 @@ The 5V analog output of the ACS712 is stepped down through a resistor voltage di
 
 
 
-#### UNDER DEVELOPMENT
+## UNDER DEVELOPMENT
 
 ## 4. Instrumentation and Measurement
 

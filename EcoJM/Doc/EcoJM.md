@@ -268,6 +268,12 @@ $$V_{\text{OUT}} = V_{\text{ref}} \times \left(1 + \frac{R_{16}}{R_{17}}\right) 
 ## 6. PCB Implementation and Mechanical Integration
 
 ## 6.1 PCB Overview
+The EcoJM PCB integrates the main system components, including the STM32F_dev MCU, CAN communication interface, microSD storage, voltage and current measurement circuits, relay switching, and auxiliary power supply. The design combines measurement, processing, communication, and power management within a single board.
+
+PCB Design Link:  https://github.com/CUERT-dev/EcoJM/blob/main/EcoJM/EcoJM.kicad_pcb 
+
+Schematic Design Link: https://github.com/CUERT-dev/EcoJM/blob/main/EcoJM/EcoJM.kicad_sch
+
 ## 6.2 Component Placement
 ## 6.3 Routing and Layout Considerations
 ## 6.4 Power and Signal Separation

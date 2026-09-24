@@ -225,6 +225,18 @@ $$V_{\text{OUT}} = V_{\text{ref}} \times \left(1 + \frac{R_{16}}{R_{17}}\right) 
 1. **Regulator IC (`U4` - AZ1117-3.3):** Fixed $+3.3\text{ V}$ low-dropout linear regulator deriving stable, low-noise power from the intermediate $+5\text{ V}$ bus.
 2. **Output Capacitor (`C7` - $10\ \mu\text{F}$):** Stabilizes the LDO control loop and attenuates high-frequency noise prior to supplying MCU and analog peripherals.
 
+# 3.9 Component Datasheets
+
+| Component | Part Number | Datasheet Link |
+| :--- | :--- | :--- |
+| DC-DC Buck Converter | MT2492 | [Datasheet](https://lcsc.com/product-detail/DC-DC-Converters_MT2492_C89358.html) |
+| Linear LDO Regulator | AZ1117-3.3 | [Datasheet](https://www.diodes.com/assets/Datasheets/AZ1117.pdf) |
+| CAN Transceiver | SIT65HVD230DR | [Datasheet](https://lcsc.com/product-detail/New-Arrivals_SIT-SIT65HVD230DR_C496619.html) |
+| MicroSD Connector | HX TF PUSH | [Datasheet](https://www.lcsc.com/datasheet/C5184837.pdf) |
+| Voltage Reference | TL431DBZ | [Datasheet](http://www.ti.com/lit/ds/symlink/tl431.pdf) |
+| Current Sensor | ACS712xLCTR-30A | [Datasheet](http://www.allegromicro.com/~/media/Files/Datasheets/ACS712-Datasheet.ashx?la=en) |
+| N-Channel MOSFET | AO3400A | [Datasheet](https://www.aosmd.com/sites/default/files/res/datasheets/AO3400A.pdf) |
+
 ## UNDER DEVELOPMENT
 
 ## 4. Instrumentation and Measurement

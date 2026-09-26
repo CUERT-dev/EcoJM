@@ -2,8 +2,7 @@
 
 
 
-<img width="635" height="367" alt="image" src="https://github.com/user-attachments/assets/05d3be40-322f-48dd-a830-78df48c4a0e6" />
-
+![](EcoJM.png)
 
 
 ## 1.1 Purpose
@@ -14,16 +13,15 @@ The purpose of this document is to provide a technical reference for understandi
 ---
 
 ## 1.2 EcoJM Scope
-The EcoJM system implements an onboard Joulemeter intended to measure the total energy consumed by an Electric Vehicle (EV), while providing real-time hardware safety mechanisms. The system is composed of integrated hardware modules responsible for low-voltage signal conditioning, energy processing, data logging, power regulation, and automated high-power load isolation.
+The EcoJM system implements an onboard Joulemeter intended to measure the total energy consumed by an Electric Vehicle (EV), while providing real-time hardware safety mechanisms. The system is composed of integrated hardware modules responsible for low-voltage signal conditioning, energy processing, data logging, and automated high-power load isolation.
 
 The EcoJM implementation provides the hardware infrastructure required for high-precision energy measurement and automated protection, including:
-* **Automated Switching & Isolation Key:** High-power relay and driver stage for physical power-bus isolation.
-* **Current & Voltage Measurement:** Differential signal paths and analog front-end circuitry for real-time power sensing.
+* **Automated Switching & Isolation Key:** High-power relay for physical power-bus isolation.
+* **Current & Voltage Measurement:** Analog front-end circuitry for real-time power sensing.
 * **Control Infrastructure:** Microcontroller processing stage for calculation of energy metrics and safety logic execution.
-* **Power Supply Unit (PSU):** Low-voltage auxiliary power regulation and rail generation.
 * **CAN Communication:** Vehicle bus interface for streaming live telemetry and diagnostic data.
 * **Onboard Data Storage:** MicroSD interface for continuous high-rate energy logging and event recording.
-* **Fault & Protection Mechanisms:** Inline fuses, inductive filtering, and transient suppression components.
+* **Fault & Protection Mechanisms:** Inline fuses, and transient suppression.
 
 The scope of this document is limited to the EcoJM hardware implementation. Firmware algorithms, software state machines, and higher-level vehicle control strategies are discussed only where they directly affect hardware operation, switching logic, or electrical interfaces.
 
@@ -32,50 +30,34 @@ The scope of this document is limited to the EcoJM hardware implementation. Firm
 ## 1.3 Design Objectives
 The EcoJM hardware was developed to satisfy the following primary engineering objectives:
 
-* **Real-time Vehicle Energy Tracking:** Maintain accurate, low-noise monitoring and accumulation of total energy usage ($\text{Wh}/\text{kWh}$) drawn by the vehicle's primary motor driver and auxiliary systems under dynamic operating conditions.
-* **Automated Fault Isolation:** Provide immediate hardware power cutoff via the primary relay (`K1`) when operating parameters exceed defined current, voltage, or short-circuit thresholds.
-* **High EMI Immunity & Noise Suppression:** Achieve signal measurement accuracy within harsh electromagnetic environments by integrating low-pass filtering networks (`L2`, `C5`, `C8–C11`, `R9–R12`), differential trace routing, and transient suppression diodes (`D1–D2`).
-* **Mechanical & Thermal Reliability:** Enhance physical board durability against vehicle chassis vibration and thermal fatigue through full teardrop reinforcement across all vias and component pads (`td_onvia`, `td_onsmdpad`, `td_onpthpad`).
-* **Maintainability & Debug Access:** Provide accessible test points (`TP3`), standardized mounting features (`H1–H4`), and clean interface layouts to simplify probing, validation, and field servicing.
+* **Real-time Vehicle Energy Tracking:** Maintain accurate, low-noise monitoring of instantaneous power and accumulation of total energy usage ($\text{Wh}/\text{kWh}$) drawn by the vehicle's the joulemeter under dynamic operating conditions.
+* **Physical Disconnect:** Physical disconnect of loads through relay K1, when either JM supply fails, External NC Shutdown Switch opens, or internal logic command.
 
 These objectives are treated as primary engineering requirements and trade-offs. Where requirements conflict, system safety, noise immunity, electrical performance, and circuit protection take strict precedence.
 
-
-
 ## 2. EcoJM System Architecture
 
-
-
 ## 2.1 System Overview
-EcoJM is a Joule meter designed to measure the total energy consumed by an Electric Vehicle (EV). The system acquires electrical measurements, processes the measurement data through an STM32-based controller, and supports communication and data storage for energy monitoring and analysis.
+EcoJM is a Joule meter designed to measure the total energy consumed by an Electric Vehicle (EV). The system acquires electrical measurements, processes the measurement data through an mcu, and supports communication and data storage for energy monitoring and analysis.
 
 ## 2.2 Functional Block Diagram
 
 The functional block diagram illustrates the main hardware modules of the EcoJM system, their interconnections, and the flow of power, measurement signals, and communication data.
 
+![](EcoJM.pdf)
+
 <img width="996" height="581" alt="image" src="https://github.com/user-attachments/assets/9c7d3ded-be28-4b88-87e7-04cd456a5250" />
 
 ## 2.3 Main Functional Domains
-- **Processing and Control**: The STM32F_dev board serves as the system's microcontroller unit (MCU). It processes measurement signals, communicates with connected peripherals, and coordinates system-level operations.
-- **Electrical Measurement**: The system acquires load measurements using a high-power voltage divider and an ACS712 30A Hall-effect current sensor. These signals are scaled down to safe analog voltages (Voltage_M and Current_M) and provided to the MCU to calculate instantaneous power and total Joule consumption.
-- **CAN Communication**: The SIT65HVD230DR acts as a CAN transceiver, providing the physical interface between the MCU's CAN signals and the external CAN bus.
-- **Switching**: K1 is an SPDT relay acting as the main high-power switch for the system. It is driven by the MCU via an AO3400A MOSFET and includes manual bypass headers for external hardware control or emergency switching.
+- **Processing and Control**: The mcu processes measurement signals, communicates with connected peripherals, and coordinates system-level operations.
+- **Electrical Measurement**: The system acquires load measurements using a high-power voltage divider and an ACS712 20A Hall-effect current sensor. These signals are scaled down to safe analog voltages and provided to the MCU to calculate instantaneous power and total Joule consumption.
+- **CAN Communication** Main field bus interface for the Joulemeter
+- **Switching**: K1 is an SPDT relay acting as the main high-power switch for the connected load. The Relay coil is only activated when the JM is powered (12V supply healthy), External Shutdown switch Closed and internal fet closed (Fet can be bypassed through header).
 - **Data Storage**: The HX TF PUSH is a microSD card socket connected to the MCU via a standard SPI interface. It provides external storage capabilities, likely for logging continuous energy consumption data.
-- **Voltage Reference**: The TL431DBZ shunt regulator provides a highly stable 2.5V reference signal (VREF). This feeds directly into the MCU’s analog-to-digital converter (ADC) to ensure precise, calibrated readings from the voltage and current sensors.
-- **Auxiliary Power Supply**: TThe power supply section steps down a 12V external input to generate the required low-voltage supply rails. A switching regulator (MT2492) efficiently steps the 12V down to 5V, while an LDO linear regulator (AZ1117-3.3) drops the 5V to a clean 3.3V rail for the digital logic.
-
-## 2.4 Power and Signal Flow
-The EcoJM system includes power distribution, electrical measurement, processing, and communication paths.
-The auxiliary power supply generates the required voltage rails for the electronic circuits. The measurement circuitry acquires voltage and current signals, which are transferred to the MCU for processing. The MCU communicates with external devices through the CAN interface and may exchange data with the microSD storage interface.
-The detailed power and signal paths, including the relevant connectors, supply rails, and measurement signals, are documented in the system schematic.
-
-
+- **Voltage Reference**: The TL431DBZ shunt regulator provides a highly stable 1% accurate 2.5V reference signal (VREF). This feeds directly into the MCU’s analog-to-digital converter (ADC) to ensure precise, calibrated readings from the voltage and current sensors.
+- **Internal Power Supply**: The power supply section steps down a 12V external input to generate the required low-voltage supply rails. A switching regulator (MT2492) efficiently steps the 12V down to 5V, while an LDO linear regulator (AZ1117-3.3) drops the 5V to a clean 3.3V rail for the digital logic.
 
 ## 3. Hardware Architecture and Module Documentation
-
-The proposed system is composed of several functional modules responsible for power switching, electrical measurement, communication, processing, and data storage. The STM32F development board acts as the central processing unit, receiving analogue measurement signals from the current and voltage measurement circuits and controlling the main power switching circuit. A CAN transceiver provides communication between the microcontroller and the vehicle CAN bus, while the auxiliary power supply generates the required 5 V and 3.3 V supply rails.
-
-
 
 ## 3.1 Microcontroller Unit
 ## 3.1.1 Purpose
@@ -110,17 +92,7 @@ The CAN communication path is divided into two interfaces. The MCU-side interfac
 The transceiver converts the logic-level CAN signals from the MCU into the differential CANH and CANL signals required by the physical CAN bus. The CANH and CANL lines are then connected to the external vehicle CAN network.
 Protection components are placed at the external interface to reduce the risk of transient or fault conditions propagating into the communication circuitry.
 
-## 3.2.3 Data flow
-
-MCU → CAN_TX → transceiver → CANH/CANL → vehicle
-
-and:
-
-vehicle → CANH/CANL → transceiver → CAN_RX → MCU
-
-
-
-## 3.3 Main Power Switch
+## 3.3 Main Load Switch
 ## 3.3.1 Purpose
 The main power switch controls the connection between the vehicle high-voltage power source and the external load. The switching function is implemented using a relay controlled by the microcontroller through an appropriate driver circuit, with secondary provisions for hardware-level manual override and transient voltage protection.
 
@@ -202,30 +174,7 @@ The MicroSD card interface provides persistent, non-volatile mass storage for th
 
 ---
 
-## 3.8 Power Supply Unit (PSU)
-
-## 3.8.1 Purpose
-The Power Supply Unit (PSU) regulates the raw input supply into two stable internal power rails: a primary $+5.0\text{ V}$ bus and a low-noise $+3.3\text{ V}$ system bus.
-
-## 3.8.2 Architecture & Cascaded Topology
-The power architecture uses a two-stage cascade configuration: raw $+12\text{ V}$ power enters via connector `J3`, passes through a high-efficiency buck converter stage ($+12\text{ V} \rightarrow +5\text{ V}$), and then feeds a low-dropout linear regulator stage ($+5\text{ V} \rightarrow +3.3\text{ V}$).
-
-##### Primary Buck Converter ($+12\text{ V} \rightarrow +5\text{ V}$)
-1. **Regulator IC (`U10` - MT2492):** High-efficiency synchronous step-down converter handling the high-voltage step-down drop.
-2. **Bootstrap Capacitor (`C9` - $22\text{ nF}$):** Flying capacitor tied between `BS` (Pin 1) and `SW` (Pin 6) providing gate drive voltage to the internal high-side MOSFET.
-3. **Enable Pull-Up (`R18` - $10\text{ k}\Omega$):** Pulls the `EN` line (Pin 4) high to $+12\text{ V}$ (`IN`), ensuring automatic power-on upon supply connection.
-4. **Power Inductor (`L2` - $6.8\ \mu\text{H}$, CD54 Package):** Energy storage element smoothing PWM switching currents into steady DC.
-5. **Feedback Network (`R16` = $110\text{ k}\Omega$, `R17` = $15\text{ k}\Omega$):** Sets output voltage relative to the internal $V_{\text{ref}} = 0.6\text{ V}$ reference:
-
-$$V_{\text{OUT}} = V_{\text{ref}} \times \left(1 + \frac{R_{16}}{R_{17}}\right) = 0.6\text{ V} \times \left(1 + \frac{110\text{ k}\Omega}{15\text{ k}\Omega}\right) = 0.6\text{ V} \times 8.333 \approx \mathbf{5.0\text{ V}}$$
-
-6. **Output Filter Capacitor (`C11` - $22\ \mu\text{F}$):** Filters high-frequency switching ripple on the output rail.
-
-##### Secondary Linear LDO Regulator ($+5\text{ V} \rightarrow +3.3\text{ V}$)
-1. **Regulator IC (`U4` - AZ1117-3.3):** Fixed $+3.3\text{ V}$ low-dropout linear regulator deriving stable, low-noise power from the intermediate $+5\text{ V}$ bus.
-2. **Output Capacitor (`C7` - $10\ \mu\text{F}$):** Stabilizes the LDO control loop and attenuates high-frequency noise prior to supplying MCU and analog peripherals.
-
-# 3.9 Component Datasheets
+# 3.8 Component Datasheets
 
 | Component | Part Number | Datasheet Link |
 | :--- | :--- | :--- |
